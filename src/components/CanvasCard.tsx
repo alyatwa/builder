@@ -2,14 +2,11 @@ import React from "react";
 
 import { Engine, Scene, Skybox } from "react-babylonjs";
 import {
-	Vector3,
+	Vector3, Tools,
 	Color3,
-	Color4,
-	ActionManager,
-	SetValueAction,
 } from "@babylonjs/core";
+
 import ScaledModelWithProgress from "./ScaledModelWithProgress";
-import { Texture, Mesh, MeshBuilder } from "@babylonjs/core";
 
 const SkyboxScenes = [
 	{
@@ -41,13 +38,21 @@ const CanvasCard: React.FC<Props> = ({ meshs }) => {
   
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
+    scene.debugLayer.show();
+    
 	};
   const onMeshPicked = (e: any) => {
 		const { canvas, scene } = e;
-    console.log(e);
+    //console.log(e);
 	};
+ 
   const onScenePointerUp = (e: any) => {
 		const { canvas, scene } = e;
+    if (!e.pickInfo.pickedMesh.parent) return;
+    //e.pickInfo.pickedMesh.parent = e.pickInfo.pickedMesh.parent.parent.parent;
+    console.log(e);
+    console.log(e.pickInfo.pickedMesh.parent.parent.parent.name);
+    console.log("new Pos: "+new Vector3(e.pickInfo.pickedPoint));
 	};
 	return (
 		<div className="w-full flex flex-col overflow-x-auto relative bg-neutral-50 border-b grow align-center">
@@ -57,7 +62,7 @@ const CanvasCard: React.FC<Props> = ({ meshs }) => {
 					adaptToDeviceRatio={true}
 					canvasId="sample-canvas"
 				>
-					<Scene onSceneMount={onSceneMount} onScenePointerUp={onScenePointerUp} onMeshPicked={onMeshPicked}>
+					<Scene onSceneMount={onSceneMount}  onScenePointerUp={onScenePointerUp} onMeshPicked={onMeshPicked}>
 						<Skybox
 							rootUrl={SkyboxScenes[Math.abs(0) % SkyboxScenes.length].texture}
 						/>
@@ -77,24 +82,25 @@ const CanvasCard: React.FC<Props> = ({ meshs }) => {
 						/>
 
 						{meshs.map((mesh) => (
-							<ScaledModelWithProgress
+							<ScaledModelWithProgress 
 								key={mesh.id}
                 id={mesh.id}
 								rootUrl={mesh.glbURL.slice(0, mesh.glbURL.lastIndexOf("/") + 1)}
 								sceneFilename={mesh.glbURL.split("/").pop()+"?"+mesh.id}
 								scaleTo={1}
 								progressBarColor={Color3.FromInts(255, 165, 0)}
-								modelRotation={new Vector3(0, mesh.rotation, 0)}
+								modelRotation={new Vector3(0, Tools.ToRadians(mesh.rotation), 0)}
 								center={new Vector3(mesh.XPos, 0, mesh.ZPos)}
 							/>
 						))}
-						<utilityLayerRenderer>
-							<gizmoManager
-								thickness={3}
+						{/*<utilityLayerRenderer>
+							<gizmoManager 
+								thickness={3} scaleRatio={0.7}
 								positionGizmoEnabled={false}
 								rotationGizmoEnabled
-							/>
-						</utilityLayerRenderer>
+							>
+                </gizmoManager>
+            </utilityLayerRenderer>*/}
 						<ground isPickable={false}
 							name="ground1"
 							width={GROUND_SIZE}
