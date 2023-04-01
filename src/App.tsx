@@ -35,7 +35,7 @@ function App() {
 
   useEffect(()=>{
     //console.log("add first mesh")
-    addMesh([
+    setMesh([
       {id:"ghffgrjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb", UseIMG:true, text:"CS", ZPos:0, XPos:0, rotation: 0, img:"https://daisycom/bvc"}])
 
   },[])
