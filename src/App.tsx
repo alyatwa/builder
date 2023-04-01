@@ -36,12 +36,12 @@ function App() {
   useEffect(()=>{
     //console.log("add first mesh")
     setMesh([
-      {id:"ghffgrjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb", UseIMG:true, text:"CS", ZPos:0, XPos:0, rotation: 0, img:"https://daisycom/bvc"}])
+      {id:"ghffgrjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb", UseIMG:true, text:"CS", ZPos:0, XPos:2, rotation: 0, img:"https://daisycom/bvc"}])
 
   },[])
 
   const addNewMesh = ():void => {
-    setMesh([...meshs, {id:"ghgfggfjhgyh"+Math.random(), glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680295347/roo_gjmvcb.glb", UseIMG:true, text:"AR", ZPos:0, XPos:0, rotation: 90, img:"https://daisyfgfgvc"}])
+    setMesh([...meshs, {id:"ghgfggfjhgyh"+Math.random(), glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb", UseIMG:true, text:"AR", ZPos:1, XPos:1, rotation: 90, img:"https://daisyfgfgvc"}])
     //console.log("add new mesh!", meshs)
   }
 
