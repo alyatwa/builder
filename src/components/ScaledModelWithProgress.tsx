@@ -38,8 +38,6 @@ const onModelLoaded = (loadedModel:any)=>{
   }*/
 }
 
-
-
 const ScaledModelWithProgress = (props: any) => { 
   const [loadProgress, setLoadProgress] = useState(0);
  

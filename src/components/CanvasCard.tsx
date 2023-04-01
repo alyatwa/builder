@@ -27,7 +27,6 @@ interface Type {
 	img: string;
 	text: string;
 	id: string;
-  
 }
 
 interface Props {
