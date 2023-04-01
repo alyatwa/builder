@@ -21,14 +21,14 @@ const ProgressFallback = (props: any) => (
 )
 
 const validateDrag = (targetPosition: Vector3): boolean => {
-  return Math.max(Math.abs(targetPosition.x), Math.abs(targetPosition.z)) <= (10 / 2); // should be -15 for torus
+  return Math.max(Math.abs(targetPosition.x), Math.abs(targetPosition.z)) <= (10 / 2)-0.5; // should be -15 for torus
 }
 
 const onModelLoaded = (loadedModel:any)=>{
   console.log(loadedModel)
   loadedModel.meshes[0].position =new Vector3(0, 0, 0)
   let drag = new PointerDragBehavior({dragPlaneNormal: new Vector3(0,1,0)});
-  loadedModel.meshes[0].addBehavior(drag);
+  loadedModel.meshes[0].parent.addBehavior(drag);
   drag.validateDrag = (p: Vector3): boolean =>{return validateDrag(p)}
   
   
@@ -43,14 +43,10 @@ const onModelLoaded = (loadedModel:any)=>{
 const ScaledModelWithProgress = (props: any) => { 
   const [loadProgress, setLoadProgress] = useState(0);
  
-  
-const onDragEndObservable = (e:any)=>{
-  //console.log(e)
-}
   return (
     <Suspense key={props.id} fallback={<ProgressFallback progressRotation={props.progressRotation} center={props.center} scaleTo={props.scaleTo} loadProgress={loadProgress} progressBarColor={props.progressBarColor} />}>
       
-      <Model name={props.id+"xx"}
+      <Model name={props.id}
         scaleToDimension={props.scaleTo}
         onLoadProgress={(evt) => {
           let modelLoadProgress = evt.lengthComputable ?
@@ -64,7 +60,7 @@ const onDragEndObservable = (e:any)=>{
           if (props.onModelLoaded) {
             props.onModelLoaded(model);
           }
-        }} 
+        }}
         rootUrl={props.rootUrl}
         sceneFilename={props.sceneFilename}
         pluginExtension={props.fileExtension}

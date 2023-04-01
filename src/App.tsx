@@ -4,6 +4,7 @@ import Header from './components/Header'
 import CanvasCard from './components/CanvasCard'
 import PropsMenu from './components/PropsMenu'
 import './App.css'
+import { Vector3 } from '@babylonjs/core'
 
 type mesh = {
   ZPos: number;
@@ -17,7 +18,9 @@ type mesh = {
 }
 
 function App() {
-  const [meshs, addMesh] = useState<mesh[]>([]);
+  const [meshs, setMesh] = useState<mesh[]>([]);
+  const [propsMenu, setMenuProps] = useState<mesh>();
+
   const dataMenu = [
     {id:"ghgzxyh", img:"https://i.imgur.com/IvjqVWK.png", label:"Room X1", glbURL:"glb"},
     {id:"ghgwejk", img:"https://i.imgur.com/ZZ1cZGj.png", label:"Room X2", glbURL:"glb"},
@@ -31,17 +34,35 @@ function App() {
   ]*/
 
   useEffect(()=>{
-    console.log("add first mesh")
+    //console.log("add first mesh")
     addMesh([
-      {id:"ghffgrjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb", UseIMG:true, text:"CS", ZPos:0, XPos:2, rotation: 45, img:"https://daisycom/bvc"}])
+      {id:"ghffgrjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb", UseIMG:true, text:"CS", ZPos:0, XPos:0, rotation: 0, img:"https://daisycom/bvc"}])
 
   },[])
 
   const addNewMesh = ():void => {
-    
-    addMesh([...meshs, {id:"ghgfggfjhgyh"+Math.random(), glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680295347/roo_gjmvcb.glb", UseIMG:true, text:"AR", ZPos:0, XPos:0, rotation: 90, img:"https://daisyfgfgvc"}])
-    console.log("add new mesh!", meshs)
+    setMesh([...meshs, {id:"ghgfggfjhgyh"+Math.random(), glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1680295347/roo_gjmvcb.glb", UseIMG:true, text:"AR", ZPos:0, XPos:0, rotation: 90, img:"https://daisyfgfgvc"}])
+    //console.log("add new mesh!", meshs)
   }
+
+  const onMouseUP = (meshId: string, pos:Vector3):void => {
+    //console.log(meshs.find(msh => msh.id === meshId));
+    //console.log(pos);
+    setMenuProps(meshs.find(msh => msh.id === meshId));
+
+    setMesh(prevState => {
+      const newState = prevState.map(obj => {
+        if (obj.id === meshId) {
+          return {...obj, XPos: pos.x, ZPos: pos.z};
+        }
+        return obj;
+      });
+      console.log(newState)
+      return newState;
+    });
+
+  }
+
 
   return (
     <div className="App">
@@ -58,7 +79,7 @@ function App() {
       </div>
       </div>
 
-      <CanvasCard meshs={meshs}/>
+      <CanvasCard meshs={meshs} onMouseUP={onMouseUP}/>
       <PropsMenu/>
       </div>
       </div>

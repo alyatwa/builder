@@ -27,18 +27,20 @@ interface Type {
 	img: string;
 	text: string;
 	id: string;
+  
 }
 
 interface Props {
 	meshs: Array<Type>;
+  onMouseUP: (mesh:string, newPos:Vector3) => void;
 }
 
-const CanvasCard: React.FC<Props> = ({ meshs }) => {
+const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 	const GROUND_SIZE = 10;
   
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
-    scene.debugLayer.show();
+    //scene.debugLayer.show();
     
 	};
   const onMeshPicked = (e: any) => {
@@ -49,10 +51,9 @@ const CanvasCard: React.FC<Props> = ({ meshs }) => {
   const onScenePointerUp = (e: any) => {
 		const { canvas, scene } = e;
     if (!e.pickInfo.pickedMesh.parent) return;
-    //e.pickInfo.pickedMesh.parent = e.pickInfo.pickedMesh.parent.parent.parent;
-    console.log(e);
-    console.log(e.pickInfo.pickedMesh.parent.parent.parent.name);
-    console.log("new Pos: "+new Vector3(e.pickInfo.pickedPoint));
+    onMouseUP(e.pickInfo.pickedMesh.parent.parent.parent.name, e.pickInfo.pickedMesh.parent.parent.parent.position);
+    //console.log("parent Pos: "+e.pickInfo.pickedMesh.parent.parent.parent.position);
+    //console.log("point Pos: "+new Vector3(e.pickInfo.pickedPoint));
 	};
 	return (
 		<div className="w-full flex flex-col overflow-x-auto relative bg-neutral-50 border-b grow align-center">
