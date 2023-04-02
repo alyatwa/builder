@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from 'react'
 
-import { ILoadedModel, Model, } from 'react-babylonjs'
+import { Model } from 'react-babylonjs'
 import { Vector3, PhysicsImpostor, Matrix,Texture,Material,Tools,  Constants,Color3,StandardMaterial, PointerDragBehavior, Mesh, AbstractMesh } from '@babylonjs/core';
 import '@babylonjs/loaders';
 import "babylonjs-inspector";
@@ -35,14 +35,29 @@ const validateDrag = (targetPosition: Vector3): boolean => {
 
 
 
+
 const ScaledModelWithProgress = (props: IMesh) => { 
   const [loadProgress, setLoadProgress] = useState(0);
+  const [loadedMod, setloadedModel] = useState<any>(null);
+
+
+React.useEffect(()=>{
+  console.log(loadedMod )
+  if (!loadedMod) return;
+  let MatMesh: Mesh = loadedMod.meshes.find((face: Mesh) => face.name === props.MatFace);
+  MatMesh.material = MatModel(props.matImg)
+},[props.matImg])
+
 
  const onModelLoaded = (loadedModel: any)=>{
+  setloadedModel(loadedModel)
+
+
+
   loadedModel.meshes[0].position = Vector3.Zero()
   loadedModel.meshes[0].rotation = Vector3.Zero()
   
-    let msh:Mesh = loadedModel.meshes[0].parent
+  let msh:Mesh = loadedModel.meshes[0].parent
   let drag = new PointerDragBehavior({dragPlaneNormal: new Vector3(0,1,0)});
  
   drag.updateDragPlane = false;

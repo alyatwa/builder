@@ -6,13 +6,47 @@ import { IMesh } from "../Types/interfaces";
 
 type IMeshType = {
   propsMenu:IMesh,
-  updateMesh: (meshId: string, rotation: number)=>void
+  updateMesh: (meshId: string, rotation: number, text:string, color:string, matImg:string, useIMG: boolean)=>void
 }
 const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => { 
+
  const [rot, setRot] = useState<number>(propsMenu.rotation);
-  const updateMeshE = (e:any)=>{
+ const [text, setText] = useState<string>(propsMenu.text);
+ const [color, setColor] = useState<string>(propsMenu.text);
+ const [matImg, setMatImg] = useState<string>(propsMenu.matImg);
+ const [useImg, setUseImg] = useState<boolean>(propsMenu.useIMG);
+
+ React.useEffect(()=>{
+  setRot(propsMenu.rotation)
+  setText(propsMenu.text)
+  setColor(propsMenu.text)
+  setMatImg(propsMenu.matImg)
+  setUseImg(propsMenu.useIMG)
+ },[propsMenu])
+
+ //console.log(propsMenu.matImg)
+  const updateRotation = (e:any)=>{
     setRot(e.target.value)
-    updateMesh(propsMenu.id, e.target.value)
+    updateMesh(propsMenu.id, e.target.value, text, color, matImg, useImg)
+  }
+  const updateText = (e:any)=>{
+    setText(e.target.value)
+    updateMesh(propsMenu.id, rot, e.target.value, color, matImg, useImg)
+  }
+
+  const updateColor = (e:any)=>{
+    setColor(e.target.value)
+    updateMesh(propsMenu.id, rot, text, e.target.value, matImg, useImg)
+  }
+
+  const updateMatimg = (e:any)=>{
+    setMatImg(e.target.value)
+    updateMesh(propsMenu.id, rot, text, color,  e.target.value, useImg)
+  }
+
+  const updateUseimg = (e:any)=>{
+    setUseImg(e.target.value)
+    updateMesh(propsMenu.id, rot, text, color,  matImg, e.target.value)
   }
 
   return (
@@ -26,12 +60,12 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
     <span>Rotation</span>
     </div>
     <div className="relative flex items-center w-full text-neutral-800 bg-white border-neutral-200 border border-solid overflow-hidden px-1.5 h-8 rounded-md">
-  <input onChange={updateMeshE} className="placeholder-neutral-300 outline-none font-input w-full" role="input" type="number" max="360" min="0" value={rot}/></div></div>
+  <input onChange={updateRotation} className="placeholder-neutral-300 outline-none font-input w-full" role="input" type="number" max="360" min="0" value={rot}/></div></div>
 
 <div className="flex flex-col font-normal">
   <label className="mb-2 text-sm" htmlFor="text">Text</label>
   <div className="relative flex items-center w-full text-neutral-800 border-neutral-100 border border-solid overflow-hidden px-3 h-8 rounded-md  border-error-default">
-  <input className="placeholder-neutral-300 select-none font-input w-full" role="input" name="text" value={propsMenu.text}/></div>
+  <input onChange={updateText} className="placeholder-neutral-300 select-none font-input w-full" role="input" name="text" value={text}/></div>
 </div>
 
 <div className="flex h-8 items-center">
@@ -47,14 +81,14 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
     <span>Use Img</span>
     </div>
     <label className="relative inline-flex items-center cursor-pointer">
-  <input type="checkbox" value="" className="sr-only peer"/>
+  <input onChange={updateUseimg} type="checkbox" value={useImg.toString()} className="sr-only peer"/>
   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
 </label></div>
 
     <div className="flex flex-col font-normal">
   <label className="mb-2 text-sm" htmlFor="img">Image</label>
   <div className="relative flex items-center w-full text-neutral-800 border-neutral-100 border border-solid overflow-hidden px-3 h-8 rounded-md  border-error-default">
-  <input className="placeholder-neutral-300 select-none font-input w-full" role="input" name="img" value={propsMenu.matImg}/></div>
+  <input onChange={updateMatimg} className="placeholder-neutral-300 select-none font-input w-full" role="input" name="img" value={matImg}/></div>
 </div>
 
 

@@ -7,6 +7,7 @@ interface IMesh {
 	glbURL: string;
 	matImg: string;
 	text: string;
+	color: string;
 	id: string;
 	useIMG: boolean;
 	MatFace: string;

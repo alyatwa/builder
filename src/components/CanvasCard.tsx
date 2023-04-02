@@ -32,7 +32,7 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
 		scene.enablePhysics(new Vector3(0, 0, 0), new CannonJSPlugin());
-    scene.debugLayer.show();
+    //scene.debugLayer.show();
 	scene.collisionsEnabled = true;
     
 	};
@@ -79,6 +79,7 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 							<ScaledModelWithProgress 
 								key={mesh.id}
                                 id={mesh.id}
+                                color={mesh.color}
 								text = {mesh.text}
 								MatFace={mesh.MatFace}
 								matImg={mesh.matImg}

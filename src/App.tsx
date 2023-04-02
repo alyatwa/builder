@@ -17,6 +17,7 @@ function App() {
 		text: "#",
 		ZPos: 0,
 		XPos: 0,
+		color: "#000",
 		rotation: 0,
 		matImg: "",
 	});
@@ -64,6 +65,7 @@ function App() {
 				text: "Room X",
 				ZPos: 0,
 				XPos: 2,
+				color: "#000",
 				MatFace: "room_101_primitive0",
 				rotation: 0,
 				matImg:
@@ -83,6 +85,7 @@ function App() {
 				text: "Room Z",
 				ZPos: 1,
 				XPos: 1,
+				color:"#000",
 				MatFace: "room_101_primitive0",
 				rotation: 90,
 				matImg: "https://i.imgur.com/IvjqVWK.png",
@@ -99,20 +102,21 @@ function App() {
 				}
 				return obj;
 			});
+			//console.log(newState.find((msh: IMesh) => msh.id === meshId))
 			setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
 			return newState;
 		});
 	};
 
-	const updateMesh = (meshId: string, rotation: number): void => {
+	const updateMesh = (meshId: string, rotation: number, text:string, color:string, matImg:string, useIMG: boolean): void => {
 		setMesh((prevState) => {
 			const newState = prevState.map((obj:IMesh) => {
 				if (obj.id === meshId) {
-					return { ...obj, rotation};
+					return { ...obj, rotation, text, color, matImg, useIMG};
 				}
 				return obj;
 			});
-			setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
+			//setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
 			return newState;
 		});
 	};
