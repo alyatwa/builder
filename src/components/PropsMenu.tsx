@@ -1,18 +1,11 @@
 import React from "react";
 import Button from './Button'
+import { IMesh } from "../Types/interfaces";
 
-interface propsMenu {
-	ZPos: number;
-	XPos: number;
-	rotation: number;
-	glbURL: string;
-	img: string;
-	text: string;
-	id: string;
-	UseIMG: boolean;
-};
-
-const PropsMenu: React.FC<propsMenu | any> = ({propsMenu}) => { 
+type IMeshType = {
+  propsMenu:IMesh
+}
+const PropsMenu: React.FC<IMeshType> = ({propsMenu}) => { 
   return (
 <div className="border-solid border-l-[1px] border-neutral-75">
 <div className="w-[252px] h-full overflow-auto">
@@ -52,7 +45,7 @@ const PropsMenu: React.FC<propsMenu | any> = ({propsMenu}) => {
     <div className="flex flex-col font-normal">
   <label className="mb-2 text-sm" htmlFor="img">Image</label>
   <div className="relative flex items-center w-full text-neutral-800 border-neutral-100 border border-solid overflow-hidden px-3 h-8 rounded-md  border-error-default">
-  <input className="placeholder-neutral-300 select-none font-input w-full" role="input" name="img" value={propsMenu.img}/></div>
+  <input className="placeholder-neutral-300 select-none font-input w-full" role="input" name="img" value={propsMenu.matImg}/></div>
 </div>
 
 

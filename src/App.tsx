@@ -5,30 +5,20 @@ import CanvasCard from "./components/CanvasCard";
 import PropsMenu from "./components/PropsMenu";
 import "./App.css";
 import { Vector3 } from "@babylonjs/core";
-
-type mesh = {
-	ZPos: number;
-	XPos: number;
-	rotation: number;
-	glbURL: string;
-	img: string;
-	text: string;
-	id: string;
-	UseIMG: boolean;
-};
-
+import { IMesh } from "./Types/interfaces";
+ 
 function App() {
-	const [meshs, setMesh] = useState<mesh[]>([]);
-	const [propsMenu, setMenuProps] = useState<mesh | undefined>({
+	const [meshs, setMesh] = useState<IMesh[]>([]);
+	const [propsMenu, setMenuProps] = useState<any>({
     id: "#",
-    glbURL:
-      "",
-    UseIMG: true,
+    glbURL: "",
+	MatFace:"https://i.imgur.com/IvjqVWK.png",
+    useIMG: true,
     text: "#",
     ZPos: 0,
     XPos: 0,
     rotation: 0,
-    img: "",
+    matImg: ""
   });
 
 	const dataMenu = [
@@ -59,8 +49,8 @@ function App() {
 	];
 
 	/*const dataScene = [
-    {id:"ghgh-hjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1674410473/v3_dxv1wj.glb", UseIMG:true, text:"CS", ZPos:0, XPos:5, rotation: 45, img:"https://daisycom/bvc"},
-    {id:"ghgfgfghgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1674410473/v3_dxv1wj.glb", UseIMG:true, text:"CS", ZPos:1, XPos:2, rotation: 45, img:"https://daisycom/bvc"}
+    {id:"ghgh-hjhgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1674410473/v3_dxv1wj.glb", UseIMG:true, text:"CS", ZPos:0, XPos:5, rotation: 45, matImg:"https://daisycom/bvc"},
+    {id:"ghgfgfghgyh", glbURL:"https://res.cloudinary.com/recapdataebse/image/upload/v1674410473/v3_dxv1wj.glb", UseIMG:true, text:"CS", ZPos:1, XPos:2, rotation: 45, matImg:"https://daisycom/bvc"}
   ]*/
 
 	useEffect(() => {
@@ -70,12 +60,13 @@ function App() {
 				id: "ghffgrjhgyh",
 				glbURL:
 					"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb",
-				UseIMG: true,
+				useIMG: true,
 				text: "Room X",
 				ZPos: 0,
 				XPos: 2,
+				MatFace:"room_101_primitive0",
 				rotation: 0,
-				img: "https://daisycom/bvc",
+				matImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGw2hN9enaEIbvQwMiWQy7ZwBh3S8qUqx1ow&usqp=CAU",
 			},
 		]);
 	}, []);
@@ -85,14 +76,14 @@ function App() {
 			...meshs,
 			{
 				id: "ghgfggfjhgyh" + Math.random(),
-				glbURL:
-					"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb",
-				UseIMG: true,
+				glbURL: "https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb",
+				useIMG: true,
 				text: "Room Z",
 				ZPos: 1,
 				XPos: 1,
+				MatFace:"room_101_primitive0",
 				rotation: 90,
-				img: "https://daisyfgfgvc",
+				matImg: "https://i.imgur.com/IvjqVWK.png",
 			},
 		]);
 		//console.log("add new mesh!", meshs)
@@ -110,7 +101,7 @@ function App() {
 				} 
 				return obj;
 			});
-      setMenuProps(newState.find((msh) => msh.id === meshId));
+      setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
 			return newState;
 		});
 	};

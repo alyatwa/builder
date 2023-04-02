@@ -2,11 +2,12 @@ import React from "react";
 
 import { Engine, Scene, Skybox } from "react-babylonjs";
 import {
-	Vector3, Tools,
-	Color3,
+	Vector3, Tools, CannonJSPlugin
 } from "@babylonjs/core";
-
 import ScaledModelWithProgress from "./ScaledModelWithProgress";
+import {IMesh} from '../Types/interfaces'
+import * as Cannon from 'cannon-es';
+window.CANNON = Cannon;
 
 const SkyboxScenes = [
 	{
@@ -19,18 +20,9 @@ const SkyboxScenes = [
 	},
 ];
 
-interface Type {
-	ZPos: number;
-	XPos: number;
-	rotation: number;
-	glbURL: string;
-	img: string;
-	text: string;
-	id: string;
-}
 
 interface Props {
-	meshs: Array<Type>;
+	meshs: Array<IMesh>;
   onMouseUP: (mesh:string, newPos:Vector3) => void;
 }
 
@@ -39,7 +31,9 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
   
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
+		scene.enablePhysics(new Vector3(0, 0, 0), new CannonJSPlugin());
     //scene.debugLayer.show();
+	scene.collisionsEnabled = true;
     
 	};
   const onMeshPicked = (e: any) => {
@@ -81,16 +75,18 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 							direction={Vector3.Up()}
 						/>
 
-						{meshs.map((mesh) => (
+						{meshs.map((mesh: IMesh) => (
 							<ScaledModelWithProgress 
 								key={mesh.id}
-                id={mesh.id}
-								rootUrl={mesh.glbURL.slice(0, mesh.glbURL.lastIndexOf("/") + 1)}
-								sceneFilename={mesh.glbURL.split("/").pop()+"?"+mesh.id}
-								scaleTo={1}
-								progressBarColor={Color3.FromInts(255, 165, 0)}
-								modelRotation={new Vector3(0, Tools.ToRadians(mesh.rotation), 0)}
-								center={new Vector3(mesh.XPos, 0, mesh.ZPos)}
+                                id={mesh.id}
+								text = {mesh.text}
+								MatFace={mesh.MatFace}
+								matImg={mesh.matImg}
+								useIMG={mesh.useIMG}
+								glbURL={mesh.glbURL}
+								rotation={mesh.rotation}
+								XPos={mesh.XPos}
+								ZPos={mesh.ZPos}
 							/>
 						))}
 						{/*<utilityLayerRenderer>
