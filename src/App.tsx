@@ -6,20 +6,20 @@ import PropsMenu from "./components/PropsMenu";
 import "./App.css";
 import { Vector3 } from "@babylonjs/core";
 import { IMesh } from "./Types/interfaces";
- 
+
 function App() {
 	const [meshs, setMesh] = useState<IMesh[]>([]);
 	const [propsMenu, setMenuProps] = useState<any>({
-    id: "#",
-    glbURL: "",
-	MatFace:"https://i.imgur.com/IvjqVWK.png",
-    useIMG: true,
-    text: "#",
-    ZPos: 0,
-    XPos: 0,
-    rotation: 0,
-    matImg: ""
-  });
+		id: "#",
+		glbURL: "",
+		MatFace: "https://i.imgur.com/IvjqVWK.png",
+		useIMG: true,
+		text: "#",
+		ZPos: 0,
+		XPos: 0,
+		rotation: 0,
+		matImg: "",
+	});
 
 	const dataMenu = [
 		{
@@ -64,9 +64,10 @@ function App() {
 				text: "Room X",
 				ZPos: 0,
 				XPos: 2,
-				MatFace:"room_101_primitive0",
+				MatFace: "room_101_primitive0",
 				rotation: 0,
-				matImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGw2hN9enaEIbvQwMiWQy7ZwBh3S8qUqx1ow&usqp=CAU",
+				matImg:
+					"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGw2hN9enaEIbvQwMiWQy7ZwBh3S8qUqx1ow&usqp=CAU",
 			},
 		]);
 	}, []);
@@ -76,12 +77,13 @@ function App() {
 			...meshs,
 			{
 				id: "ghgfggfjhgyh" + Math.random(),
-				glbURL: "https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb",
+				glbURL:
+					"https://res.cloudinary.com/recapdataebse/image/upload/v1680316343/roo_sihbrf.glb",
 				useIMG: true,
 				text: "Room Z",
 				ZPos: 1,
 				XPos: 1,
-				MatFace:"room_101_primitive0",
+				MatFace: "room_101_primitive0",
 				rotation: 90,
 				matImg: "https://i.imgur.com/IvjqVWK.png",
 			},
@@ -90,18 +92,27 @@ function App() {
 	};
 
 	const onMouseUP = (meshId: string, pos: Vector3): void => {
-		
-		//setMenuProps(meshs.find((msh) => msh.id === meshId));
-    //console.log(propsMenu);
-    //setMenuProps(meshs.find((msh) => msh.id === meshId));
 		setMesh((prevState) => {
 			const newState = prevState.map((obj) => {
 				if (obj.id === meshId) {
 					return { ...obj, XPos: pos.x, ZPos: pos.z };
-				} 
+				}
 				return obj;
 			});
-      setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
+			setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
+			return newState;
+		});
+	};
+
+	const updateMesh = (meshId: string, rotation: number): void => {
+		setMesh((prevState) => {
+			const newState = prevState.map((obj:IMesh) => {
+				if (obj.id === meshId) {
+					return { ...obj, rotation};
+				}
+				return obj;
+			});
+			setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
 			return newState;
 		});
 	};
@@ -127,7 +138,7 @@ function App() {
 					</div>
 
 					<CanvasCard meshs={meshs} onMouseUP={onMouseUP} />
-					<PropsMenu propsMenu={propsMenu} />
+					<PropsMenu propsMenu={propsMenu} updateMesh={updateMesh} />
 				</div>
 			</div>
 		</div>

@@ -39,12 +39,10 @@ const ScaledModelWithProgress = (props: IMesh) => {
   const [loadProgress, setLoadProgress] = useState(0);
 
  const onModelLoaded = (loadedModel: any)=>{
-  loadedModel.meshes[0].position =new Vector3(0, 0, 0)
+  loadedModel.meshes[0].position = Vector3.Zero()
+  loadedModel.meshes[0].rotation = Vector3.Zero()
   
-    let msh:Mesh = loadedModel.meshes[0]
-  //console.log(mshimp.parent.parent.parent.name)
-
-msh.checkCollisions = true;
+    let msh:Mesh = loadedModel.meshes[0].parent
   let drag = new PointerDragBehavior({dragPlaneNormal: new Vector3(0,1,0)});
  
   drag.updateDragPlane = false;

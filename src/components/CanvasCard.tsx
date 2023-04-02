@@ -32,7 +32,7 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
 		scene.enablePhysics(new Vector3(0, 0, 0), new CannonJSPlugin());
-    //scene.debugLayer.show();
+    scene.debugLayer.show();
 	scene.collisionsEnabled = true;
     
 	};
@@ -89,14 +89,14 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 								ZPos={mesh.ZPos}
 							/>
 						))}
-						{/*<utilityLayerRenderer>
-							<gizmoManager 
+						<utilityLayerRenderer>
+							{/*<gizmoManager
 								thickness={3} scaleRatio={0.7}
 								positionGizmoEnabled={false}
 								rotationGizmoEnabled
 							>
-                </gizmoManager>
-            </utilityLayerRenderer>*/}
+						</gizmoManager>*/}
+            </utilityLayerRenderer>
 						<ground isPickable={false}
 							name="ground1"
 							width={GROUND_SIZE}

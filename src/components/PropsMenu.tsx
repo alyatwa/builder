@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from './Button'
 import { IMesh } from "../Types/interfaces";
 
+
+
 type IMeshType = {
-  propsMenu:IMesh
+  propsMenu:IMesh,
+  updateMesh: (meshId: string, rotation: number)=>void
 }
-const PropsMenu: React.FC<IMeshType> = ({propsMenu}) => { 
+const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => { 
+ const [rot, setRot] = useState<number>(propsMenu.rotation);
+  const updateMeshE = (e:any)=>{
+    setRot(e.target.value)
+    updateMesh(propsMenu.id, e.target.value)
+  }
+
   return (
 <div className="border-solid border-l-[1px] border-neutral-75">
 <div className="w-[252px] h-full overflow-auto">
@@ -17,7 +26,7 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu}) => {
     <span>Rotation</span>
     </div>
     <div className="relative flex items-center w-full text-neutral-800 bg-white border-neutral-200 border border-solid overflow-hidden px-1.5 h-8 rounded-md">
-  <input className="placeholder-neutral-300 outline-none font-input w-full" role="input" type="number" max="360" min="0" value={propsMenu.rotation}/></div></div>
+  <input onChange={updateMeshE} className="placeholder-neutral-300 outline-none font-input w-full" role="input" type="number" max="360" min="0" value={rot}/></div></div>
 
 <div className="flex flex-col font-normal">
   <label className="mb-2 text-sm" htmlFor="text">Text</label>
