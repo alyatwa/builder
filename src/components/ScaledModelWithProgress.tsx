@@ -71,16 +71,14 @@ const ScaledModelWithProgress = (props: IMesh) => {
 	const [currMat, setMatModel] = useState<StandardMaterial | null>(null);
 
 	React.useEffect(() => {
-		updateMaterial();
+		updateMaterial(loadedMod);
 	}, [props.matImg, props.text, props.useIMG]);
 
 	const onModelLoaded = (loadedModel: any) => {
 		setloadedModel(loadedModel);
-    if (!currMat) 
-    {
-      updateMaterial();
+    
       setMatModel(new StandardMaterial("img_mat"))
-    }
+      updateMaterial(loadedModel);
 
 		loadedModel.meshes[0].position = Vector3.Zero();
 		loadedModel.meshes[0].rotation = Vector3.Zero();
@@ -101,10 +99,10 @@ const ScaledModelWithProgress = (props: IMesh) => {
 		};
 		
 	};
-	const updateMaterial = (): void => {
-		if (!loadedMod) return;
-		//console.log("update mat");
-		let MatMesh: Mesh = loadedMod.meshes.find(
+	const updateMaterial = (loadedModel: any): void => {
+		console.log(props);
+    if (!loadedModel) return;
+		let MatMesh: Mesh = loadedModel.meshes.find(
 			(face: Mesh) => face.name === props.MatFace
 		);
 		if (props.useIMG) {
@@ -165,8 +163,7 @@ const ScaledModelWithProgress = (props: IMesh) => {
 					let modelLoadProgress = evt.lengthComputable
 						? evt.loaded / evt.total
 						: evt.loaded /
-						  (2000 *
-								0.085); /* provided fileSize is not for 'view' manifest, a bad guess often, but generally factor ~0.085 smaller  */
+						  (2000 * 0.085); /* provided fileSize is not for 'view' manifest, a bad guess often, but generally factor ~0.085 smaller  */
 					setLoadProgress(modelLoadProgress);
 				}}
 				onModelLoaded={(model) => {

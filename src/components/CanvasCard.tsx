@@ -2,7 +2,7 @@ import React from "react";
 
 import { Engine, Scene, Skybox } from "react-babylonjs";
 import {
-	Vector3, Tools, CannonJSPlugin
+	Vector3
 } from "@babylonjs/core";
 import ScaledModelWithProgress from "./ScaledModelWithProgress";
 import {IMesh} from '../Types/interfaces'
@@ -31,8 +31,7 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
   
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
-		scene.enablePhysics(new Vector3(0, 0, 0), new CannonJSPlugin());
-    scene.debugLayer.show();
+    //scene.debugLayer.show();
 	scene.collisionsEnabled = true;
     
 	};

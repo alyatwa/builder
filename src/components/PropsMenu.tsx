@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import Button from './Button'
 import { IMesh } from "../Types/interfaces";
 import { SketchPicker } from 'react-color';
-import {FloatingPortal} from '@floating-ui/react';
 
 type IMeshType = {
   propsMenu:IMesh,
+  delMesh: (id: string)=>void,
   updateMesh: (meshId: string, rotation: number, text:string, color:string, matImg:string, useIMG: boolean)=>void
 }
-const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => { 
+const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh, delMesh}) => { 
 
  const [isOpen, setOpen] = useState<boolean>(false);
 
@@ -117,6 +117,13 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
   <input className="placeholder-neutral-300 select-none font-input w-full" disabled role="input" name="zpos" value={propsMenu.ZPos}/>
   </div>
   </div>
+  <div className="flex h-8 items-center font-normal justify-end">
+  <button className="text-white bg-red-700 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-thin rounded-lg text-sm px-3 py-2 text-center" type="button"
+      onClick={()=>delMesh(propsMenu.id)}
+    >
+    <span className="flex h-full items-center whitespace-nowrap">Delete</span>
+    </button></div>
+
 
 
 </div>

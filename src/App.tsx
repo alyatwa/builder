@@ -94,6 +94,18 @@ function App() {
 		//console.log("add new mesh!", meshs)
 	};
 
+	const delMesh =(id: string):void =>{
+		console.log(id)
+		//setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
+		setMesh((prevState: IMesh[]) =>{
+			const newState = prevState.filter(function(obj) { 
+			return obj.id !== id 
+		})
+		return newState;
+	});
+	console.log(meshs)
+	}
+
 	const onMouseUP = (meshId: string, pos: Vector3): void => {
 		setMesh((prevState) => {
 			const newState = prevState.map((obj) => {
@@ -142,7 +154,7 @@ function App() {
 					</div>
 
 					<CanvasCard meshs={meshs} onMouseUP={onMouseUP} />
-					<PropsMenu propsMenu={propsMenu} updateMesh={updateMesh} />
+					<PropsMenu propsMenu={propsMenu} delMesh={delMesh} updateMesh={updateMesh} />
 				</div>
 			</div>
 		</div>
