@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Button from './Button'
 import { IMesh } from "../Types/interfaces";
-
-
+import { SketchPicker } from 'react-color';
+import {FloatingPortal} from '@floating-ui/react';
 
 type IMeshType = {
   propsMenu:IMesh,
   updateMesh: (meshId: string, rotation: number, text:string, color:string, matImg:string, useIMG: boolean)=>void
 }
 const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => { 
+
+ const [isOpen, setOpen] = useState<boolean>(false);
 
  const [rot, setRot] = useState<number>(propsMenu.rotation);
  const [text, setText] = useState<string>(propsMenu.text);
@@ -23,8 +25,7 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
   setMatImg(propsMenu.matImg)
   setUseImg(propsMenu.useIMG)
  },[propsMenu])
-
- //console.log(propsMenu.matImg)
+ 
   const updateRotation = (e:any)=>{
     setRot(e.target.value)
     updateMesh(propsMenu.id, e.target.value, text, color, matImg, useImg)
@@ -34,9 +35,9 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
     updateMesh(propsMenu.id, rot, e.target.value, color, matImg, useImg)
   }
 
-  const updateColor = (e:any)=>{
-    setColor(e.target.value)
-    updateMesh(propsMenu.id, rot, text, e.target.value, matImg, useImg)
+  const updateColor = (color: any)=>{
+    setColor(color.hex)
+    updateMesh(propsMenu.id, rot, text, color.hex, matImg, useImg)
   }
 
   const updateMatimg = (e:any)=>{
@@ -45,7 +46,8 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
   }
 
   const updateUseimg = (e:any)=>{
-    setUseImg(e.target.value)
+    
+    setUseImg(!useImg)
     updateMesh(propsMenu.id, rot, text, color,  matImg, e.target.value)
   }
 
@@ -72,9 +74,15 @@ const PropsMenu: React.FC<IMeshType> = ({propsMenu, updateMesh}) => {
   <label className="basis-40 flex items-center space-x-2 text-sm">
     <span>Color</span>
     </label>
-    <div className="h-6 w-6 border border-solid border-neutral-75 rounded-full shadow-xs hover:cursor-pointer hover:shadow-sm transition-shadow ml-auto"></div>
+    <div onClick={()=>setOpen(!isOpen)} style={{backgroundColor:color}} className="h-6 w-6 border border-solid border-neutral-75 rounded-full shadow-xs hover:cursor-pointer hover:shadow-sm transition-shadow ml-auto"></div>
     </div>
- 
+    
+      { isOpen && (
+      <SketchPicker
+      color={ color }
+      onChangeComplete={ updateColor }
+    />
+    )}
 
     <div className="flex h-8 items-center font-normal">
 <div className="shrink-0 flex grow items-center space-x-2  text-sm">
