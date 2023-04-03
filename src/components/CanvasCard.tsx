@@ -32,7 +32,7 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 	const onSceneMount = (e: any) => {
 		const { canvas, scene } = e;
 		scene.enablePhysics(new Vector3(0, 0, 0), new CannonJSPlugin());
-    //scene.debugLayer.show();
+    scene.debugLayer.show();
 	scene.collisionsEnabled = true;
     
 	};
@@ -45,8 +45,6 @@ const CanvasCard: React.FC<Props> = ({ meshs, onMouseUP }) => {
 		const { canvas, scene } = e;
     if (!e.pickInfo.pickedMesh.parent) return;
     onMouseUP(e.pickInfo.pickedMesh.parent.parent.parent.name, e.pickInfo.pickedMesh.parent.parent.parent.position);
-    //console.log("parent Pos: "+e.pickInfo.pickedMesh.parent.parent.parent.position);
-    //console.log("point Pos: "+new Vector3(e.pickInfo.pickedPoint));
 	};
 	return (
 		<div className="w-full flex flex-col overflow-x-auto relative bg-neutral-50 border-b grow align-center">
