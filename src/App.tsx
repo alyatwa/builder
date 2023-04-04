@@ -9,18 +9,7 @@ import { IMesh } from "./Types/interfaces";
 
 function App() {
 	const [meshs, setMesh] = useState<IMesh[]>([]);
-	const [propsMenu, setMenuProps] = useState<any>({
-		id: "#",
-		glbURL: "",
-		MatFace: "https://i.imgur.com/IvjqVWK.png",
-		useIMG: true,
-		text: "#",
-		ZPos: 0,
-		XPos: 0,
-		color: "#000",
-		rotation: 0,
-		matImg: "",
-	});
+	const [propsMenu, setMenuProps] = useState<any>(null);
 
 	const dataMenu = [
 		{
@@ -95,8 +84,6 @@ function App() {
 	};
 
 	const delMesh =(id: string):void =>{
-		console.log(id)
-		//setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
 		setMesh((prevState: IMesh[]) =>{
 			const newState = prevState.filter(function(obj) { 
 			return obj.id !== id 
@@ -128,7 +115,6 @@ function App() {
 				}
 				return obj;
 			});
-			//setMenuProps(newState.find((msh: IMesh) => msh.id === meshId));
 			return newState;
 		});
 	};

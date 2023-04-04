@@ -5,9 +5,7 @@ import {
 	Vector3
 } from "@babylonjs/core";
 import ScaledModelWithProgress from "./ScaledModelWithProgress";
-import {IMesh} from '../Types/interfaces'
-import * as Cannon from 'cannon-es';
-window.CANNON = Cannon;
+import {IMesh} from '../Types/interfaces' 
 
 const SkyboxScenes = [
 	{

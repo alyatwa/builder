@@ -100,7 +100,7 @@ const ScaledModelWithProgress = (props: IMesh) => {
 		
 	};
 	const updateMaterial = (loadedModel: any): void => {
-		console.log(props);
+		
     if (!loadedModel) return;
 		let MatMesh: Mesh = loadedModel.meshes.find(
 			(face: Mesh) => face.name === props.MatFace
